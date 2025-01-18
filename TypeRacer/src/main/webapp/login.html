@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Login & Signup</title>
+  <style>
+    /* Global Styles */
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: url('https://source.unsplash.com/1600x900/?ocean,water') no-repeat center center/cover;
+      color: #fff;
+    }
+
+    #container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 128, 128, 0.85); /* Aqua background */
+      padding: 30px 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 128, 128, 0.3); /* Aqua shadow */
+      width: 100%;
+      max-width: 400px;
+      animation: fadeIn 1.5s ease;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #00ffff; /* Aqua text color */
+      text-align: center;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+      background: #004d4d; /* Dark aqua */
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    input::placeholder {
+      color: #b3e6e6; /* Light aqua */
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background: #00cccc; /* Bright aqua */
+      color: #000;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #009999; /* Darker aqua on hover */
+    }
+
+    #loginContainer,
+    #signUpContainer {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #signUpContainer {
+      display: none; /* Initially hide signup */
+    }
+
+    .toggle-link {
+      margin-top: 10px;
+      color: #00ffff;
+      text-decoration: underline;
+      cursor: pointer;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    /* Custom Alert Styles */
+    #customAlert {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #004d4d;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 128, 128, 0.5);
+      text-align: center;
+      z-index: 1000;
+      width: 300px;
+    }
+
+    #customAlert p {
+      color: #fff;
+      margin-bottom: 20px;
+      font-size: 1rem;
+    }
+
+    #customAlert button {
+      width: auto;
+      padding: 10px 20px;
+      background: #00cccc;
+      color: #000;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    #customAlert button:hover {
+      background: #009999;
+    }
+
+    /* Fade-in effect for alert */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @media (min-width: 768px) {
+      #container {
+        padding: 40px 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div id="loginContainer">
+      <h1>Login</h1>
+      <input type="text" id="loginUserName" placeholder="Enter the username">
+      <input type="password" id="loginPassword" placeholder="Enter the password">
+      <button id="loginBtn">SUBMIT</button>
+      <div class="toggle-link" id="showSignUp">Don't have an account? Sign Up</div>
+    </div>
+
+    <div id="signUpContainer">
+      <h1>Sign Up</h1>
+      <input type="text" id="signUpUserName" placeholder="Enter the username">
+      <input type="password" id="signUpPassword" placeholder="Enter the password">
+      <button id="signUpBtn">SUBMIT</button>
+      <div class="toggle-link" id="showLogin">Already have an account? Login</div>
+    </div>
+  </div>
+
+  <!-- Custom Alert Box -->
+  <div id="customAlert">
+    <p id="alertMessage">This is an alert message!</p>
+    <button id="alertCloseBtn">OK</button>
+  </div>
+
+  <script>
+  
+	    const loginContainer = document.getElementById('loginContainer');
+	    const signUpContainer = document.getElementById('signUpContainer');
+	    const showSignUp = document.getElementById('showSignUp');
+	    const showLogin = document.getElementById('showLogin');
+	    const customAlert = document.getElementById('customAlert');
+	    const alertMessage = document.getElementById('alertMessage');
+	    const alertCloseBtn = document.getElementById('alertCloseBtn');
+	
+	    showSignUp.addEventListener('click', () => {
+	    	
+		      loginContainer.style.display = 'none';
+		      signUpContainer.style.display = 'flex';
+		      
+	    });
+	    
+	    showLogin.addEventListener('click', () => {
+	    	
+		      signUpContainer.style.display = 'none';
+		      loginContainer.style.display = 'flex';
+		      
+	    });
+	
+	    function showAlert(message) {
+	    	
+		      alertMessage.textContent = message;
+		      customAlert.style.display = 'block';
+		      
+	    }
+	
+	    alertCloseBtn.addEventListener('click', () => {
+	    	
+	      	customAlert.style.display = 'none';
+	    
+	    });
+	
+	    document.getElementById('loginBtn').addEventListener('click', function() {
+		      const userName = document.getElementById('loginUserName').value;
+		      const password = document.getElementById('loginPassword').value;
+		      const orgPassword = localStorage.getItem(userName);
+		
+		      if (orgPassword === password) {
+			        localStorage.setItem('loggedInUser', userName);
+			        sessionStorage.setItem('user', userName);
+			        showAlert('Login successful! Redirecting...');
+			        setTimeout(() => {
+			          window.location.href = 'index.jsp';
+			        }, 1000);
+		      } 
+		      else {
+		        	showAlert('Invalid username or password!');
+		      }
+	    });
+	
+	    document.getElementById('signUpBtn').addEventListener('click', function() {
+		      const userName = document.getElementById('signUpUserName').value;
+		      const password = document.getElementById('signUpPassword').value;
+		
+		      if (localStorage.getItem(userName)) {
+		        	showAlert('User Name already exists!');
+		      } 
+		      else {
+			        localStorage.setItem(userName, password);
+			        showAlert('Signup successful! You can now login.');
+		      }
+	    });
+  </script>
+</body>
+</html>

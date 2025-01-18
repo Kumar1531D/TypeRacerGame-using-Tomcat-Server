@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>HOME page</title>
+<link rel="stylesheet" href = "styles2.css">
+</head>
+<body>
+<div class="timer" id="timer"></div>
+<div id = "wpm"></div>
+  
+  <div class="container">
+    <div class="quote-display" id="quoteDisplay"></div>
+    <textarea id="quoteInput" class="quote-input" autofocus readonly></textarea>
+  </div>
+  
+  <div><button onclick = "readyButtonClick()" id = "readyButton">Ready</button> 
+  <button id = "rematchButton" style = "display: none;">Rematch</button>
+  <button id = "exitButton" style = "display: none;">Exit</button>
+  </div>
+  
+  <!-- <div id="progressBar">
+        <div id="fillBar"></div>
+    </div>
+  <div id="progressContainer" class="progress-container"></div> -->
+  
+  <div id = "progressBars"></div>
+
+
+  <div class = "res-display" id = "res"></div>
+  <div id = "d"></div>
+  
+  <script src="script.js"></script>
+
+</body>
+</html>
